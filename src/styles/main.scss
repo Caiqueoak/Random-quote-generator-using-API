@@ -1,0 +1,93 @@
+$initial-color: #aaf;
+
+@mixin centered-flex {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+body {
+	font-weight: 400;
+	font-style: italic;
+	background-color: $initial-color;
+}
+
+#loading {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 3rem;
+	font-weight: 700;
+	color: black;
+}
+
+#main-container {
+	min-height: 100vh;
+	@include centered-flex;
+	background-color: $initial-color;
+	transition: background-color 1s;
+
+	* {
+		transition: all 1s;
+	}
+}
+
+#quote-box {
+	@include centered-flex;
+	flex-direction: column;
+	background-color: #fff;
+	width: 550px;
+	padding: 40px;
+	border-radius: 5px;
+
+	#text {
+		font-size: 1.8rem;
+		text-align: center;
+		line-height: 2.3rem;
+		color: $initial-color;
+
+		#author {
+			color: $initial-color;
+			font-size: 1.1rem;
+		}
+		i {
+			color: $initial-color;
+			padding-right: 10px;
+		}
+	}
+	#buttons-container {
+		$size: 40px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		width: 100%;
+		height: $size;
+
+		#share-buttons {
+			height: 100%;
+			display: flex;
+			column-gap: 5px;
+
+			i {
+				cursor: pointer;
+				background-color: $initial-color;
+				font-size: 1.5rem;
+				width: $size;
+				height: $size;
+				text-align: center;
+				line-height: $size;
+				border-radius: 5px;
+			}
+		}
+		#new-quote {
+			padding: 0 12px;
+			height: $size;
+			border-radius: 5px;
+			border: none;
+			background-color: coral;
+			text-align: center;
+			line-height: $size;
+		}
+	}
+}

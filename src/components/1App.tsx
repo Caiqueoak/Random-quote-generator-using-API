@@ -3,8 +3,12 @@ import { Quote } from "./2Quote";
 import { ShareButton } from "./2ShareButton";
 
 const shareButtons = [
-	{ id: "tweet-quote", url: "", iconClass: "fab fa-twitter text-white" },
-	{ id: "tumblr-quote", url: "", iconClass: "fab fa-tumblr text-white" },
+	{
+		id: "tweet-quote",
+		url: "https://twitter.com/intent/tweet?hashtags=quotes&related=freecodecamp&text=",
+		iconClass: "fab fa-twitter text-white",
+	},
+	{ id: "tumblr-quote", url: "https://www.tumblr.com/widgets/share/tool?posttype=quote&tags=quotes,freecodecamp&caption=", iconClass: "fab fa-tumblr text-white" },
 ];
 
 const colors = [
@@ -82,6 +86,9 @@ export function App(props: any): JSX.Element {
 									<ShareButton
 										id={button.id}
 										key={button.id}
+										url={button.url}
+										quote={quote}
+										author={author}
 										backgroundColor={bgColor}
 										iconClass={button.iconClass}
 									/>

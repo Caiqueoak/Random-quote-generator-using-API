@@ -7,41 +7,53 @@ const shareButtons = [
 	{ id: "tumblr-quote", url: "", iconClass: "fab fa-tumblr text-white" },
 ];
 
+const colors = [
+	"#16a085",
+	"#27ae60",
+	"#2c3e50",
+	"#f39c12",
+	"#e74c3c",
+	"#9b59b6",
+	"#FB6964",
+	"#342224",
+	"#472E32",
+	"#BDBB99",
+	"#77B1A9",
+	"#73A857",
+];
+
 export function App(props: any): JSX.Element {
 	const generateRandomColor = () =>
-		Math.round(Math.random() * Math.pow(256, 3)).toString(16);
-
-	const generateRandomQuote = () =>
-		Math.round(Math.random() * Array(null).length);
+		colors[Math.round(Math.random() * colors.length)];
 
 	const [bgColor, setBgColor] = useState(generateRandomColor());
 	const [opacity, setOpacity] = useState("0");
-	const [transition, setTransition] = useState("none");
 	const [quote, setQuote] = useState(undefined);
 	const [author, setAuthor] = useState(undefined);
 	const [loading, setLoading] = useState(true);
-	const hexBgColor = `#${bgColor}`;
 
 	useEffect(() => {
 		setOpacity("0");
-		async function fetchQuotes() {
-			const response = await fetch(
-				"https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json"
-			);
-			const quotes = await response.json();
+		setTimeout(() => {
+			async function fetchQuotes() {
+				const response = await fetch(
+					"https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json"
+				);
+				const quotes = await response.json();
 
-			const index = Math.round(Math.random() * (quotes["quotes"].length - 1));
-			const quote = quotes["quotes"][index]["quote"];
-			const author = quotes["quotes"][index]["author"];
+				const index = Math.round(Math.random() * (quotes["quotes"].length - 1));
+				const quote = quotes["quotes"][index]["quote"];
+				const author = quotes["quotes"][index]["author"];
 
-			setQuote(quote);
-			setAuthor(author);
-			setLoading(false);
-		}
+				setQuote(quote);
+				setAuthor(author);
+				setLoading(false);
+			}
+			fetchQuotes();
+		}, 500);
 		setTimeout(() => {
 			setOpacity("1");
-		}, 750);
-		fetchQuotes();
+		}, 500);
 	}, [bgColor]);
 
 	return (
@@ -49,15 +61,18 @@ export function App(props: any): JSX.Element {
 			{loading ? (
 				<div id="loading">Loading...</div>
 			) : (
-				<div id="main-container" style={{ backgroundColor: hexBgColor }}>
+				<div id="main-container" style={{ backgroundColor: bgColor }}>
 					<main id="quote-box">
 						{/* QUOTE */}
-						<div style={{ color: hexBgColor, opacity: opacity, transition: transition }} id="text">
-							<i
-								style={{ color: hexBgColor, transition: transition }}
-								className="fas fa-quote-left"
-							></i>
-							<Quote quote={quote} author={author} transition={transition} color={hexBgColor} />
+						<div
+							style={{
+								color: bgColor,
+								opacity: opacity,
+							}}
+							id="text"
+						>
+							<i style={{ color: bgColor }} className="fas fa-quote-left"></i>
+							<Quote quote={quote} author={author} color={bgColor} />
 						</div>
 
 						<section id="buttons-container">
@@ -67,7 +82,7 @@ export function App(props: any): JSX.Element {
 									<ShareButton
 										id={button.id}
 										key={button.id}
-										backgroundColor={hexBgColor}
+										backgroundColor={bgColor}
 										iconClass={button.iconClass}
 									/>
 								))}
@@ -75,7 +90,7 @@ export function App(props: any): JSX.Element {
 
 							{/* NEW QUOTE BUTTON */}
 							<button
-								style={{ backgroundColor: hexBgColor }}
+								style={{ backgroundColor: bgColor }}
 								className="text-white"
 								id="new-quote"
 								onClick={() => setBgColor(generateRandomColor())}
@@ -88,11 +103,14 @@ export function App(props: any): JSX.Element {
 			)}
 
 			<footer>
-					Coded by {' '}
-					<a href="https://github.com/Caiqueoak/Random-quote-generator-using-API" target='_blank'>
-						Caiqueoak
-					</a>
-					.
+				Coded by{" "}
+				<a
+					href="https://github.com/Caiqueoak/Random-quote-generator-using-API"
+					target="_blank"
+				>
+					Caiqueoak
+				</a>
+				.
 			</footer>
 		</>
 	);

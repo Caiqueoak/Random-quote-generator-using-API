@@ -16,12 +16,14 @@ export function App(props: any): JSX.Element {
 
 	const [bgColor, setBgColor] = useState(generateRandomColor());
 	const [opacity, setOpacity] = useState("0");
+	const [transition, setTransition] = useState("none");
 	const [quote, setQuote] = useState(undefined);
 	const [author, setAuthor] = useState(undefined);
 	const [loading, setLoading] = useState(true);
 	const hexBgColor = `#${bgColor}`;
 
 	useEffect(() => {
+		setOpacity("0");
 		async function fetchQuotes() {
 			const response = await fetch(
 				"https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json"
@@ -36,10 +38,9 @@ export function App(props: any): JSX.Element {
 			setAuthor(author);
 			setLoading(false);
 		}
-		setOpacity("0");
 		setTimeout(() => {
 			setOpacity("1");
-		}, 1000);
+		}, 750);
 		fetchQuotes();
 	}, [bgColor]);
 
@@ -51,12 +52,12 @@ export function App(props: any): JSX.Element {
 				<div id="main-container" style={{ backgroundColor: hexBgColor }}>
 					<main id="quote-box">
 						{/* QUOTE */}
-						<div style={{ color: hexBgColor, opacity: opacity }} id="text">
+						<div style={{ color: hexBgColor, opacity: opacity, transition: transition }} id="text">
 							<i
-								style={{ color: hexBgColor }}
+								style={{ color: hexBgColor, transition: transition }}
 								className="fas fa-quote-left"
 							></i>
-							<Quote quote={quote} author={author} color={hexBgColor} />
+							<Quote quote={quote} author={author} transition={transition} color={hexBgColor} />
 						</div>
 
 						<section id="buttons-container">
@@ -85,6 +86,14 @@ export function App(props: any): JSX.Element {
 					</main>
 				</div>
 			)}
+
+			<footer>
+					Coded by {' '}
+					<a href="https://github.com/Caiqueoak/Random-quote-generator-using-API" target='_blank'>
+						Caiqueoak
+					</a>
+					.
+			</footer>
 		</>
 	);
 }

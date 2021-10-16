@@ -7,7 +7,9 @@ $initial-color: #aaf;
 }
 
 body {
+	position: relative;
 	font-weight: 400;
+	height: 100vh;
 	font-style: italic;
 	background-color: $initial-color;
 }
@@ -46,6 +48,10 @@ body {
 		text-align: center;
 		line-height: 2.3rem;
 		color: $initial-color;
+		
+		*, & {
+			transition: none;
+		}
 
 		#author {
 			color: $initial-color;
@@ -85,9 +91,23 @@ body {
 			height: $size;
 			border-radius: 5px;
 			border: none;
-			background-color: coral;
+			background-color: $initial-color;
 			text-align: center;
 			line-height: $size;
 		}
 	}
+}
+
+footer {
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	font-weight: 700;
+	background-color: #fff;
+	height: fit-content;
+	padding: 7px 20px;
+	border-radius: 5px;
+	border: 1px solid #000;
+	margin-bottom: 5px;
 }
